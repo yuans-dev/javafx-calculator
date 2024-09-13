@@ -1,157 +1,190 @@
 package com.guiprog;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
-/**
- * Group Name: <Group Name>
- * Group Members: <Group Members>
- * Course/Section: <Course/Section>
- */
+import javafx.scene.control.Label;
 
 public class CalculatorController {
 
     @FXML
-    Label calcDisplay;
-    @FXML
-    Button calcPad1;
-    @FXML
-    Button calcPad2;
-    @FXML
-    Button calcPad3;
-    @FXML
-    Button calcPad4;
-    @FXML
-    Button calcPad5;
-    @FXML
-    Button calcPad6;
-    @FXML
-    Button calcPad7;
-    @FXML
-    Button calcPad8;
-    @FXML
-    Button calcPad9;
-    @FXML
-    Button calcPad0;
-    @FXML
-    Button calcPadAdd;
-    @FXML
-    Button calcPadMinus;
-    @FXML
-    Button calcPadMultiply;
-    @FXML
-    Button calcPadDivide;
-    @FXML
-    Button calcPadDot;
-    @FXML
-    Button calcPadEquals;
-    @FXML
-    Button calcPadClear;
-    @FXML
-    Button calcPadNegative;
-    @FXML
-    Button calcPadDelete;
-    @FXML
-    Button calcPadCE;
+    private Label calcDisplay;
+
+    private double firstOperand = 0;
+    private double secondOperand = 0;
+    private String operator = "";
+    private boolean startNewInput = true;
+    private boolean operatorPressed = false;
+    private boolean dotPressed = false;
 
     @FXML
-    private void handleCalcPad1() {
-        calcDisplay.setText("handleCalcPad1");
+    public void handleCalcPad0(ActionEvent event) {
+        handleNumberInput("0");
     }
 
     @FXML
-    private void handleCalcPad2() {
-        calcDisplay.setText("handleCalcPad2");
+    public void handleCalcPad1(ActionEvent event) {
+        handleNumberInput("1");
     }
 
     @FXML
-    private void handleCalcPad3() {
-        calcDisplay.setText("handleCalcPad3");
+    public void handleCalcPad2(ActionEvent event) {
+        handleNumberInput("2");
     }
 
     @FXML
-    private void handleCalcPad4() {
-        calcDisplay.setText("handleCalcPad4");
+    public void handleCalcPad3(ActionEvent event) {
+        handleNumberInput("3");
     }
 
     @FXML
-    private void handleCalcPad5() {
-        calcDisplay.setText("handleCalcPad5");
+    public void handleCalcPad4(ActionEvent event) {
+        handleNumberInput("4");
     }
 
     @FXML
-    private void handleCalcPad6() {
-        calcDisplay.setText("handleCalcPad6");
+    public void handleCalcPad5(ActionEvent event) {
+        handleNumberInput("5");
     }
 
     @FXML
-    private void handleCalcPad7() {
-        calcDisplay.setText("handleCalcPad7");
+    public void handleCalcPad6(ActionEvent event) {
+        handleNumberInput("6");
     }
 
     @FXML
-    private void handleCalcPad8() {
-        calcDisplay.setText("handleCalcPad8");
+    public void handleCalcPad7(ActionEvent event) {
+        handleNumberInput("7");
     }
 
     @FXML
-    private void handleCalcPad9() {
-        calcDisplay.setText("handleCalcPad9");
+    public void handleCalcPad8(ActionEvent event) {
+        handleNumberInput("8");
     }
 
     @FXML
-    private void handleCalcPad0() {
-        calcDisplay.setText("handleCalcPad0");
+    public void handleCalcPad9(ActionEvent event) {
+        handleNumberInput("9");
     }
 
     @FXML
-    private void handleCalcPadAdd() {
-        calcDisplay.setText("handleCalcPadAdd");
+    public void handleCalcPadAdd(ActionEvent event) {
+        handleOperatorInput("+");
     }
 
     @FXML
-    private void handleCalcPadMinus() {
-        calcDisplay.setText("handleCalcPadMinus");
+    public void handleCalcPadMinus(ActionEvent event) {
+        handleOperatorInput("-");
     }
 
     @FXML
-    private void handleCalcPadMultiply() {
-        calcDisplay.setText("handleCalcPadMultiply");
+    public void handleCalcPadMultiply(ActionEvent event) {
+        handleOperatorInput("*");
     }
 
     @FXML
-    private void handleCalcPadDivide() {
-        calcDisplay.setText("handleCalcPadDivide");
+    public void handleCalcPadDivide(ActionEvent event) {
+        handleOperatorInput("/");
     }
 
     @FXML
-    private void handleCalcPadDot() {
-        calcDisplay.setText("handleCalcPadDot");
+    public void handleCalcPadEquals(ActionEvent event) {
+        if (!operator.isEmpty()) {
+            secondOperand = Double.parseDouble(calcDisplay.getText());
+            double result = calculate(firstOperand, secondOperand, operator);
+            calcDisplay.setText(String.valueOf(result));
+            operator = "";
+            startNewInput = true;
+            dotPressed = false;
+        }
     }
 
     @FXML
-    private void handleCalcPadEquals() {
-        calcDisplay.setText("handleCalcPadEquals");
+    public void handleCalcPadDot(ActionEvent event) {
+        if (!dotPressed) {
+            calcDisplay.setText(calcDisplay.getText() + ".");
+            dotPressed = true;
+            startNewInput = false;
+        }
     }
 
     @FXML
-    private void handleCalcPadClear() {
-        calcDisplay.setText("handleCalcPadClear");
+    public void handleCalcPadClear(ActionEvent event) {
+        calcDisplay.setText("0");
+        startNewInput = true;
+        dotPressed = false;
     }
 
     @FXML
-    private void handleCalcPadNegative() {
-        calcDisplay.setText("handleCalcPadNegative");
+    public void handleCalcPadCE(ActionEvent event) {
+        firstOperand = 0;
+        secondOperand = 0;
+        operator = "";
+        calcDisplay.setText("0");
+        startNewInput = true;
+        dotPressed = false;
+        operatorPressed = false;
     }
 
     @FXML
-    private void handleCalcPadDelete() {
-        calcDisplay.setText("handleCalcPadDelete");
+    public void handleCalcPadDelete(ActionEvent event) {
+        String currentText = calcDisplay.getText();
+        if (currentText.length() > 0) {
+            calcDisplay.setText(currentText.substring(0, currentText.length() - 1));
+        }
     }
 
     @FXML
-    private void handleCalcPadCE() {
-        calcDisplay.setText("handleCalcPadCE");
+    public void handleCalcPadNegative(ActionEvent event) {
+        String currentText = calcDisplay.getText();
+        if (!currentText.equals("0")) {
+            if (currentText.startsWith("-")) {
+                calcDisplay.setText(currentText.substring(1));
+            } else {
+                calcDisplay.setText("-" + currentText);
+            }
+        }
+    }
+
+    private void handleNumberInput(String number) {
+        if (startNewInput) {
+            calcDisplay.setText(number);
+            startNewInput = false;
+        } else {
+            calcDisplay.setText(calcDisplay.getText() + number);
+        }
+
+        operatorPressed = false;
+    }
+
+    private void handleOperatorInput(String newOperator) {
+        if (!operatorPressed) {
+            if (!operator.isEmpty()) {
+                operator = newOperator; // Override operator without calculation
+            } else {
+                firstOperand = Double.parseDouble(calcDisplay.getText());
+                operator = newOperator;
+            }
+            operatorPressed = true;
+            startNewInput = true;
+            dotPressed = false;
+        } else {
+            operator = newOperator; // Override operator directly
+        }
+    }
+
+    private double calculate(double firstOperand, double secondOperand, String operator) {
+        switch (operator) {
+            case "+":
+                return firstOperand + secondOperand;
+            case "-":
+                return firstOperand - secondOperand;
+            case "*":
+                return firstOperand * secondOperand;
+            case "/":
+                return secondOperand != 0 ? firstOperand / secondOperand : 0;
+            default:
+                return 0;
+        }
     }
 }
