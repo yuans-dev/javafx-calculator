@@ -2,8 +2,17 @@ package com.guiprog;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Label;
+
+/**
+ * Group Name: Eggplanters
+ * Group Members: Suarez, Yuan Benedict
+ * Capuz, Luigi
+ * Lopez, Rhyan
+ * Omac, Kathrin Grace
+ * Villamil, Jeffrey
+ * Course/Section: CSS124L BM1
+ */
 
 public class CalculatorController {
 
